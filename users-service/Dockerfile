@@ -4,6 +4,6 @@ COPY . /opt/app
 # changes pwd
 WORKDIR /opt/app
 
-RUN npm install
+RUN yarn
 
-CMD npm run watch
+CMD yarn watch
