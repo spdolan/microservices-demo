@@ -1,11 +1,7 @@
+import ListingsService from "#root/adapters/ListingsService";
+
 const listingsResolver = async () => {
-  return [
-    {
-      description: "booyah",
-      id: 1,
-      title: "GQL test"
-    }
-  ]
+  return await ListingsService.fetchAllListings();
 }
 
 export default listingsResolver;
