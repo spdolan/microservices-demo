@@ -2,3 +2,5 @@ api-gateway/node_modules
 classifieds-app/node_modules
 listings-service/node_modules
 users-service/node_modules
+
+classifieds-app/.cache
