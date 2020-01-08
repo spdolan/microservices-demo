@@ -1,6 +1,6 @@
 import * as Query from "./Query"
 import * as Mutation from "./Mutation"
-
-const resolvers = { Query, Mutation }
+import UserSession from './UserSession'
+const resolvers = { Query, Mutation, UserSession }
 
 export default resolvers;

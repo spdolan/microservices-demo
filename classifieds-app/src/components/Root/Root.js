@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import AccountDetails from './AccountDetails'
+import Listings from './Listings'
 import graphqlClient from "#root/api/graphqlClient"
 import {useDispatch} from 'react-redux'
 import {setSession} from '#root/store/ducks/session'
@@ -56,7 +57,9 @@ const Root = () => {
   return (
     <Wrapper>
       <Container>
-        <Content>This is content</Content>
+        <Content>
+          <Listings />
+        </Content>
         <Sidebar>
           <AccountDetails />
         </Sidebar>

@@ -74062,7 +74062,331 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var _default = _AccountDetails.default;
 exports.default = _default;
-},{"./AccountDetails":"components/Root/AccountDetails/AccountDetails.js"}],"components/Root/Root.js":[function(require,module,exports) {
+},{"./AccountDetails":"components/Root/AccountDetails/AccountDetails.js"}],"components/shared/TextArea.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _styledComponents = _interopRequireDefault(require("styled-components"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n  border: 1px solid ", ";\n  box-sizing: border-box;\n  display: block;\n  font-size: 0.9rem;\n  padding: 0.25rem;\n  resize: vertical;\n  width: 100%;\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var Textarea = _styledComponents.default.textarea(_templateObject(), function (props) {
+  return props.theme.veryLightGrey;
+});
+
+var _default = Textarea;
+exports.default = _default;
+},{"styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js"}],"components/Root/Listings/AddListing/AddListing.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _reactHooks = require("@apollo/react-hooks");
+
+var _graphqlTag = _interopRequireDefault(require("graphql-tag"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _styledComponents = _interopRequireDefault(require("styled-components"));
+
+var _reactHookForm = _interopRequireDefault(require("react-hook-form"));
+
+var _TextInput = _interopRequireDefault(require("#root/components/shared/TextInput"));
+
+var _TextArea = _interopRequireDefault(require("#root/components/shared/TextArea"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _templateObject5() {
+  var data = _taggedTemplateLiteral(["\n  mutation($description: String!, $title: String!){\n    createListing(description: $description, title: $title){\n      id\n      description\n      title\n    }\n  }\n"]);
+
+  _templateObject5 = function _templateObject5() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject4() {
+  var data = _taggedTemplateLiteral(["\n  display: inline-block;\n  margin-top: 0.5rem;\n\n"]);
+
+  _templateObject4 = function _templateObject4() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["\n  display: block;\n  font-size: 0.9rem;\n  margin-bottom: 0.5rem;\n"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject2() {
+  var data = _taggedTemplateLiteral(["\n  display: block;\n  :not(:first-child){\n    margin-top: 0.5rem;\n  }\n"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n  background-color: ", ";\n  margin-top: 1rem;\n  padding: 1rem;\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var Form = _styledComponents.default.form(_templateObject(), function (props) {
+  return props.theme.whiteSmoke;
+});
+
+var Label = _styledComponents.default.label(_templateObject2());
+
+var LabelText = _styledComponents.default.strong(_templateObject3());
+
+var Button = _styledComponents.default.button(_templateObject4());
+
+var mutation = (0, _graphqlTag.default)(_templateObject5());
+
+var AddListing = function AddListing(_ref) {
+  var pushAddListing = _ref.onAddListing;
+
+  var _useMutation = (0, _reactHooks.useMutation)(mutation),
+      _useMutation2 = _slicedToArray(_useMutation, 1),
+      createListing = _useMutation2[0];
+
+  var _useForm = (0, _reactHookForm.default)(),
+      isSubmitting = _useForm.formState.isSubmitting,
+      handleSubmit = _useForm.handleSubmit,
+      register = _useForm.register,
+      reset = _useForm.reset;
+
+  var session = (0, _reactRedux.useSelector)(function (state) {
+    return state.session;
+  });
+  if (!session) return _react.default.createElement("p", null, "Login to add Listing.");
+  var onSubmit = handleSubmit(
+  /*#__PURE__*/
+  function () {
+    var _ref3 = _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee(_ref2) {
+      var description, title;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              description = _ref2.description, title = _ref2.title;
+              _context.next = 3;
+              return createListing({
+                variables: {
+                  description: description,
+                  title: title
+                }
+              });
+
+            case 3:
+              reset();
+              pushAddListing();
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function (_x) {
+      return _ref3.apply(this, arguments);
+    };
+  }());
+  return _react.default.createElement(Form, {
+    onSubmit: onSubmit
+  }, _react.default.createElement(Label, null, _react.default.createElement(LabelText, null, "Title"), _react.default.createElement(_TextInput.default, {
+    disabled: isSubmitting,
+    name: "title",
+    type: "text",
+    ref: register
+  })), _react.default.createElement(Label, null, _react.default.createElement(LabelText, null, "Description"), _react.default.createElement(_TextArea.default, {
+    disabled: isSubmitting,
+    name: "description",
+    type: "textarea",
+    ref: register
+  })), _react.default.createElement(Button, {
+    type: "submit"
+  }, "Add Listing"));
+};
+
+var _default = AddListing;
+exports.default = _default;
+},{"@apollo/react-hooks":"../node_modules/@apollo/react-hooks/lib/react-hooks.esm.js","graphql-tag":"../node_modules/graphql-tag/src/index.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","react-hook-form":"../node_modules/react-hook-form/dist/react-hook-form.es.js","#root/components/shared/TextInput":"components/shared/TextInput.js","#root/components/shared/TextArea":"components/shared/TextArea.js"}],"components/Root/Listings/AddListing/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _AddListing = _interopRequireDefault(require("./AddListing"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = _AddListing.default;
+exports.default = _default;
+},{"./AddListing":"components/Root/Listings/AddListing/AddListing.js"}],"components/Root/Listings/Listings.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _reactHooks = require("@apollo/react-hooks");
+
+var _graphqlTag = _interopRequireDefault(require("graphql-tag"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _styledComponents = _interopRequireDefault(require("styled-components"));
+
+var _AddListing = _interopRequireDefault(require("./AddListing"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _templateObject4() {
+  var data = _taggedTemplateLiteral(["\n  {\n    listings {\n      description\n      id\n      title\n    }\n  }\n"]);
+
+  _templateObject4 = function _templateObject4() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["\n  display: block;\n  font-size: 1.5rem;\n  font-weight: 700;\n"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject2() {
+  var data = _taggedTemplateLiteral(["\n  padding: 1rem 0;\n\n  :not(:last-child){\n    border-bottom: 1px solid ", "\n  }\n"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n  margin-bottom: 0;\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var Description = _styledComponents.default.p(_templateObject());
+
+var Listing = _styledComponents.default.div(_templateObject2(), function (props) {
+  return props.theme.veryLightGrey;
+});
+
+var Title = _styledComponents.default.p(_templateObject3());
+
+var query = (0, _graphqlTag.default)(_templateObject4());
+
+var Listings = function Listings() {
+  var _useQuery = (0, _reactHooks.useQuery)(query),
+      data = _useQuery.data,
+      loading = _useQuery.loading,
+      refetch = _useQuery.refetch;
+
+  if (loading) return "Loading...";
+  return _react.default.createElement("div", null, _react.default.createElement("div", null, data.listings.map(function (listing) {
+    return _react.default.createElement(Listing, {
+      key: listing.id
+    }, _react.default.createElement(Title, null, listing.title), _react.default.createElement(Description, null, listing.description));
+  })), _react.default.createElement(_AddListing.default, {
+    onAddListing: function onAddListing() {
+      return refetch();
+    }
+  }));
+};
+
+var _default = Listings;
+exports.default = _default;
+},{"@apollo/react-hooks":"../node_modules/@apollo/react-hooks/lib/react-hooks.esm.js","graphql-tag":"../node_modules/graphql-tag/src/index.js","react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","./AddListing":"components/Root/Listings/AddListing/index.js"}],"components/Root/Listings/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Listings = _interopRequireDefault(require("./Listings"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = _Listings.default;
+exports.default = _default;
+},{"./Listings":"components/Root/Listings/Listings.js"}],"components/Root/Root.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -74075,6 +74399,8 @@ var _react = _interopRequireWildcard(require("react"));
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _AccountDetails = _interopRequireDefault(require("./AccountDetails"));
+
+var _Listings = _interopRequireDefault(require("./Listings"));
 
 var _graphqlClient = _interopRequireDefault(require("#root/api/graphqlClient"));
 
@@ -74181,12 +74507,12 @@ var Root = function Root() {
       setInitialized(true);
     });
   }, []);
-  return _react.default.createElement(Wrapper, null, _react.default.createElement(Container, null, _react.default.createElement(Content, null, "This is content"), _react.default.createElement(Sidebar, null, _react.default.createElement(_AccountDetails.default, null))));
+  return _react.default.createElement(Wrapper, null, _react.default.createElement(Container, null, _react.default.createElement(Content, null, _react.default.createElement(_Listings.default, null)), _react.default.createElement(Sidebar, null, _react.default.createElement(_AccountDetails.default, null))));
 };
 
 var _default = Root;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","./AccountDetails":"components/Root/AccountDetails/index.js","#root/api/graphqlClient":"api/graphqlClient.js","react-redux":"../node_modules/react-redux/es/index.js","#root/store/ducks/session":"store/ducks/session.js","graphql-tag":"../node_modules/graphql-tag/src/index.js"}],"components/Root/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","./AccountDetails":"components/Root/AccountDetails/index.js","./Listings":"components/Root/Listings/index.js","#root/api/graphqlClient":"api/graphqlClient.js","react-redux":"../node_modules/react-redux/es/index.js","#root/store/ducks/session":"store/ducks/session.js","graphql-tag":"../node_modules/graphql-tag/src/index.js"}],"components/Root/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -74226,13 +74552,15 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.nero = exports.mortar = exports.veryLightGrey = void 0;
+exports.whiteSmoke = exports.nero = exports.mortar = exports.veryLightGrey = void 0;
 var veryLightGrey = "#CCCCCC";
 exports.veryLightGrey = veryLightGrey;
 var mortar = "#555555";
 exports.mortar = mortar;
 var nero = "#222222";
 exports.nero = nero;
+var whiteSmoke = "#f8f8f8";
+exports.whiteSmoke = whiteSmoke;
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -74568,7 +74896,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55301" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58058" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
